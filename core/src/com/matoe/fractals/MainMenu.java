@@ -1,30 +1,33 @@
 package com.matoe.fractals;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.awt.*;
 
 public class MainMenu implements Screen {
 
     FractalRenderer game;
     OrthographicCamera camera;
-    Texture triangleImage;
-    Texture fernImage;
-    Texture dragonImage;
+    Button triangleButton;
+    Button fernButton;
+    Button dragonButton;
     float SCALE;
 
     public MainMenu(FractalRenderer game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, FractalRenderer.WIDTH,FractalRenderer.HEIGHT);
-        triangleImage = new Texture("TriangleButton.png");
-        fernImage = new Texture("FernButton.png");
-        dragonImage = new Texture("DragonButton.png");
-        SCALE = (float) 400 / dragonImage.getHeight();
+
+        dragonButton = new Button("DragonButton.png", .293f, game, camera);
+        dragonButton.place(FractalRenderer.WIDTH/5 - dragonButton.getWidth()/2 -15,30);
+
+        triangleButton = new Button("TriangleButton.png",.293f, game, camera);
+        triangleButton.place(FractalRenderer.WIDTH/2 - triangleButton.getWidth()/2,30);
+
+        fernButton = new Button("FernButton.png", .293f, game, camera);
+        fernButton.place(4*FractalRenderer.WIDTH/5 - fernButton.getWidth()/2 +15,30);
+
+        SCALE = .293f;
     }
     @Override
     public void show() {
@@ -35,13 +38,22 @@ public class MainMenu implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0,0,.05f,1);
         game.batch.begin();
-        game.batch.draw(dragonImage, FractalRenderer.WIDTH/5 - dragonImage.getWidth()*SCALE/2 -15,30, dragonImage.getWidth()*SCALE, dragonImage.getHeight()*SCALE);
-        game.batch.draw(triangleImage, FractalRenderer.WIDTH/2 - triangleImage.getWidth()*SCALE/2,30, triangleImage.getWidth()*SCALE, triangleImage.getHeight()*SCALE);
-        game.batch.draw(fernImage,4*FractalRenderer.WIDTH/5 - fernImage.getWidth()*SCALE/2 +15,30, fernImage.getWidth()*SCALE, fernImage.getHeight() * SCALE);
-        game.batch.end();
-        Rectangle r = new Rectangle();
-        if(Gdx.input.isTouched()){
 
+        dragonButton.batchDraw();
+        triangleButton.batchDraw();
+        fernButton.batchDraw();
+
+        game.batch.end();
+
+        if(dragonButton.isPressed()){
+            game.setScreen(new DragonCurve(game));
+        }
+
+        if(triangleButton.isPressed()){
+            game.setScreen(new SierpinskiTriangle(game));
+        }
+        if(fernButton.isPressed()){
+            game.setScreen(new BarnsleyFern(game));
         }
     }
 
