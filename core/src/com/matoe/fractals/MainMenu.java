@@ -36,6 +36,8 @@ public class MainMenu implements Screen {
         ScreenUtils.clear(0,0,.05f,1);
         game.batch.begin();
 
+        game.font.draw(game.batch, "Iterated Fractal Rendering", (float)(FractalRenderer.WIDTH-200)/2,650, 200f, 1, true);
+        game.font.draw(game.batch, "For each fractal, left click to increase iteration depth, and right click to decrease iteration depth", (float)(FractalRenderer.WIDTH-310)/2,620, 310f, 1, true);
         dragonButton.batchDraw();
         triangleButton.batchDraw();
         fernButton.batchDraw();
