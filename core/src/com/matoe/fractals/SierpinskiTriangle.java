@@ -7,10 +7,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class SierpinskiTriangle implements Screen {
     FractalRenderer game;
     OrthographicCamera camera;
+    Button backButton;
     public SierpinskiTriangle(FractalRenderer game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, FractalRenderer.WIDTH,FractalRenderer.HEIGHT);
+        backButton = new Button("TriangleBackButton.png", .2f, game, camera);
     }
     @Override
     public void show() {
@@ -21,6 +23,13 @@ public class SierpinskiTriangle implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(.5f,0.35f,0,1);
         camera.update();
+        game.batch.begin();
+        backButton.batchDraw();
+        game.batch.end();
+
+        if(backButton.isPressed()){
+            game.setScreen(new MainMenu(game));
+        }
     }
 
     @Override

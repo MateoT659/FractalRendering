@@ -8,10 +8,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class DragonCurve implements Screen {
     FractalRenderer game;
     OrthographicCamera camera;
+    Button backButton;
     public DragonCurve(FractalRenderer game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, FractalRenderer.WIDTH,FractalRenderer.HEIGHT);
+        backButton = new Button("DragonBackButton.png", .2f, game, camera);
     }
     @Override
     public void show() {
@@ -22,6 +24,13 @@ public class DragonCurve implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(.5f,0,0,1);
         camera.update();
+        game.batch.begin();
+        backButton.batchDraw();
+        game.batch.end();
+
+        if(backButton.isPressed()){
+            game.setScreen(new MainMenu(game));
+        }
     }
 
     @Override

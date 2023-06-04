@@ -11,7 +11,6 @@ public class MainMenu implements Screen {
     Button triangleButton;
     Button fernButton;
     Button dragonButton;
-    float SCALE;
 
     public MainMenu(FractalRenderer game){
         this.game = game;
@@ -26,8 +25,6 @@ public class MainMenu implements Screen {
 
         fernButton = new Button("FernButton.png", .293f, game, camera);
         fernButton.place(4*FractalRenderer.WIDTH/5 - fernButton.getWidth()/2 +15,30);
-
-        SCALE = .293f;
     }
     @Override
     public void show() {
@@ -47,14 +44,17 @@ public class MainMenu implements Screen {
 
         if(dragonButton.isPressed()){
             game.setScreen(new DragonCurve(game));
+            dispose();
         }
-
         if(triangleButton.isPressed()){
             game.setScreen(new SierpinskiTriangle(game));
+            dispose();
         }
         if(fernButton.isPressed()){
             game.setScreen(new BarnsleyFern(game));
+            dispose();
         }
+
     }
 
     @Override
@@ -79,6 +79,8 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        dragonButton.img.dispose();
+        fernButton.img.dispose();
+        triangleButton.img.dispose();
     }
 }
