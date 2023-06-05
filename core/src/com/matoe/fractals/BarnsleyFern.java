@@ -14,7 +14,7 @@ public class BarnsleyFern implements Screen {
     public BarnsleyFern(FractalRenderer game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, FractalRenderer.WIDTH,FractalRenderer.HEIGHT);
+        camera.setToOrtho(false, Dim.WIDTH,Dim.HEIGHT);
         backButton = new Button("FernBackButton.png", 0.2f, game, camera);
         depth = 0;
     }
@@ -29,7 +29,7 @@ public class BarnsleyFern implements Screen {
         camera.update();
         game.batch.begin();
         backButton.batchDraw();
-        game.font.draw(game.batch, "Depth: "+depth, (float)(FractalRenderer.WIDTH-200)/2, 700, 200f, 1, true);
+        game.font.draw(game.batch, "Depth: "+depth, (float)(Dim.WIDTH-200)/2, 700, 200f, 1, true);
         game.batch.end();
 
         if(backButton.isPressed()){

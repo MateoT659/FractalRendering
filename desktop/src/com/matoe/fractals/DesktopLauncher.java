@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.setTitle("Fractal Rendering");
-		config.setWindowedMode(FractalRenderer.WIDTH, FractalRenderer.HEIGHT);
+		config.setWindowedMode(Dim.WIDTH, Dim.HEIGHT);
 		new Lwjgl3Application(new FractalRenderer(), config);
 	}
 }

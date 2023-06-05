@@ -10,8 +10,6 @@ public class FractalRenderer extends Game {
 
 	SpriteBatch batch;
 	BitmapFont font;
-	static final int WIDTH = 1000;
-	static final int HEIGHT = 720;
 
 	@Override
 	public void create() {

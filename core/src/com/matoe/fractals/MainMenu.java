@@ -1,8 +1,14 @@
 package com.matoe.fractals;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.awt.*;
 
 public class MainMenu implements Screen {
 
@@ -11,20 +17,25 @@ public class MainMenu implements Screen {
     Button triangleButton;
     Button fernButton;
     Button dragonButton;
+    ShapeRenderer sr;
 
     public MainMenu(FractalRenderer game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, FractalRenderer.WIDTH,FractalRenderer.HEIGHT);
+        camera.setToOrtho(false, Dim.WIDTH,Dim.HEIGHT);
 
         dragonButton = new Button("DragonButton.png", .293f, game, camera);
-        dragonButton.place(FractalRenderer.WIDTH/5 - dragonButton.getWidth()/2 -15,30);
+        dragonButton.place(Dim.WIDTH/5 - dragonButton.getWidth()/2 -15,30);
 
         triangleButton = new Button("TriangleButton.png",.293f, game, camera);
-        triangleButton.place(FractalRenderer.WIDTH/2 - triangleButton.getWidth()/2,30);
+        triangleButton.place(Dim.WIDTH/2 - triangleButton.getWidth()/2,30);
 
         fernButton = new Button("FernButton.png", .293f, game, camera);
-        fernButton.place(4*FractalRenderer.WIDTH/5 - fernButton.getWidth()/2 +15,30);
+        fernButton.place(4*Dim.WIDTH/5 - fernButton.getWidth()/2 +15,30);
+
+        sr = new ShapeRenderer();
+        sr.setColor(1,1,1,1);
+        sr.setProjectionMatrix(camera.combined);
     }
     @Override
     public void show() {
@@ -36,13 +47,14 @@ public class MainMenu implements Screen {
         ScreenUtils.clear(0,0,.05f,1);
         game.batch.begin();
 
-        game.font.draw(game.batch, "Iterated Fractal Rendering", (float)(FractalRenderer.WIDTH-200)/2,650, 200f, 1, true);
-        game.font.draw(game.batch, "For each fractal, left click to increase iteration depth, and right click to decrease iteration depth", (float)(FractalRenderer.WIDTH-310)/2,620, 310f, 1, true);
+        game.font.draw(game.batch, "Iterated Fractal Rendering", (float)(Dim.WIDTH-200)/2,650, 200f, 1, true);
+        game.font.draw(game.batch, "For each fractal, left click to increase iteration depth, and right click to decrease iteration depth", (float)(Dim.WIDTH-310)/2,620, 310f, 1, true);
         dragonButton.batchDraw();
         triangleButton.batchDraw();
         fernButton.batchDraw();
 
         game.batch.end();
+
 
         if(dragonButton.isPressed()){
             game.setScreen(new DragonCurve(game));
