@@ -38,7 +38,7 @@ public class DragonCurve implements Screen {
         ScreenUtils.clear(.1f,0.06f,0.06f,1);
         game.batch.begin();
         backButton.batchDraw();
-        game.font.draw(game.batch, "Depth: "+depth + " Size: " + ll.size(), (float)(Dim.WIDTH-200)/2, 700, 200f, 1, true);
+        game.font.draw(game.batch, "Depth: "+depth + " Size: " + Math.pow(2,depth), (float)(Dim.WIDTH-200)/2, 700, 200f, 1, true);
         game.batch.end();
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
