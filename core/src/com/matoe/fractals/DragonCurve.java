@@ -11,7 +11,8 @@ import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-import javax.xml.crypto.dsig.Transform;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class DragonCurve implements Screen {
     FractalRenderer game;
@@ -23,6 +24,30 @@ public class DragonCurve implements Screen {
     Vector2 start;
     Vector2 pivot;
     Vector2 end;
+    LinkedList<Vector2> ll;
+
+    void rotateFirst(Vector2 temp){
+        temp.rotateAroundDeg(start, -45);
+        temp.set((float) (start.x - (start.x - temp.x) / Math.sqrt(2)), (float) (start.y - (start.y - temp.y) / Math.sqrt(2)));
+    }
+    void rotateSecond(Vector2 temp){
+        temp.rotateAroundDeg(pivot, -90);
+    }
+
+    void showFrac(){
+        ScreenUtils.clear(.1f,0.06f,0.06f,1);
+        game.batch.begin();
+        backButton.batchDraw();
+        game.font.draw(game.batch, "Depth: "+depth + " Size: " + ll.size(), (float)(Dim.WIDTH-200)/2, 700, 200f, 1, true);
+        game.batch.end();
+
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        for(int i = 0; i<Math.pow(2, depth); i++){
+            Dim.drawLine(sr, ll.get(i), ll.get(i+1), 10-depth/2, color);
+        }
+        sr.end();
+    }
+
     public DragonCurve(FractalRenderer game){
         this.game = game;
         camera = new OrthographicCamera();
@@ -35,48 +60,52 @@ public class DragonCurve implements Screen {
         pivot = new Vector2(550,140);
         end = new Vector2(850, 440);
         color = new Color(.5f,0,0,1);
-
+        ll = new LinkedList<>();
+        ll.add(new Vector2(start));
+        ll.add(new Vector2(end));
     }
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(.1f,0.06f,0.06f,1);
-        camera.update();
-        game.batch.begin();
-        backButton.batchDraw();
-        game.font.draw(game.batch, "Depth: "+depth, (float)(Dim.WIDTH-200)/2, 700, 200f, 1, true);
+        showFrac();
 
 
-
-        game.batch.end();
-
-
-
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        Dim.drawLine(sr, start, end, 10, color);
-        sr.end();
-
-        if(backButton.isPressed()){
+        if(backButton.isPressed())
+        {
             game.setScreen(new MainMenu(game));
         }
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-            depth++;
-            end.rotateAroundDeg(start,-45);
-            end.set((float)(start.x - (start.x-end.x)/Math.sqrt(2)), (float)(start.y - (start.y - end.y)/Math.sqrt(2)));
-            start.rotateAroundDeg(pivot,-90);
-        }
-        if(Gdx.input.isButtonJustPressed((Input.Buttons.RIGHT))){
-            if(depth>0){
-                depth--;
-                end.rotateAroundDeg(start,45);
-                end.set((float)(start.x - (start.x-end.x)*Math.sqrt(2)), (float)(start.y - (start.y - end.y)*Math.sqrt(2)));
+        else
+        {
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+
+                Vector2 temp;
+                for (int i = 1; i < Math.pow(2, depth) + 1; i++) {
+                    rotateFirst(ll.get(i));
+                }
+                for (int i = (int) Math.pow(2, depth)-1; i > -1; i--) {
+                    temp = ll.get(i).cpy();
+                    rotateSecond(temp);
+                    ll.add(temp.cpy());
+                }
+                depth++;
             }
+            if (Gdx.input.isButtonJustPressed((Input.Buttons.RIGHT))) {
+                if (depth > 0) {
 
+                    for(int i = 1; i<Math.pow(2, depth-1)+1;i++) {
+                        ll.get(i).rotateAroundDeg(start, 45);
+                        ll.get(i).set((float) (start.x - (start.x - ll.get(i).x) * Math.sqrt(2)), (float) (start.y - (start.y - ll.get(i).y) * Math.sqrt(2)));
+                    }
+                    while(ll.size()>Math.pow(2,depth-1)+1) {
+                        ll.removeLast();
+                    }
+                    depth--;
+                }
 
+            }
         }
     }
 
