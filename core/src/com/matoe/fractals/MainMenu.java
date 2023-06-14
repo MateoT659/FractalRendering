@@ -1,14 +1,9 @@
 package com.matoe.fractals;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.utils.ScreenUtils;
-
-import java.awt.*;
 
 public class MainMenu implements Screen {
 

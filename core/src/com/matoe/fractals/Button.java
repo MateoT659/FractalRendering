@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
-import java.awt.*;
+import java.awt.Rectangle;
 
 public class Button {
     int x, y, width, height;
