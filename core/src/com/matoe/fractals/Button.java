@@ -3,9 +3,9 @@ package com.matoe.fractals;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
-import java.awt.Rectangle;
 
 public class Button {
     int x, y, width, height;
@@ -24,7 +24,7 @@ public class Button {
     public void place(int x, int y){
         this.x = x;
         this.y = y;
-        rectangle.setLocation(x, y);
+        rectangle.set(x, y, width, height);
     }
 
     public int getWidth() {
