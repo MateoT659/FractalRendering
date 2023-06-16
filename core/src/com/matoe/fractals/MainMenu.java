@@ -40,6 +40,7 @@ public class MainMenu implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0,0,.05f,1);
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
 
         game.font.draw(game.batch, "Iterated Fractal Rendering", (float)(Dim.WIDTH-200)/2,650, 200f, 1, true);

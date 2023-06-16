@@ -27,6 +27,7 @@ public class SierpinskiTriangle implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(.05f,0.035f,0.02f,1);
         camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         backButton.batchDraw();
         game.font.draw(game.batch, "Depth: "+depth, (float)(Dim.WIDTH-200)/2, 700, 200f, 1, true);
