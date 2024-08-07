@@ -78,6 +78,7 @@ public class BarnsleyFern implements Screen {
         game.batch.end();
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
+        sr.setColor(color);
         for(Line l:toRender){
             Dim.drawLine(sr, l.p1, l.p2,5, color);
         }

@@ -56,7 +56,7 @@ public class SierpinskiTriangle implements Screen {
         renderingList.add(new Vector2(832, 75));
         triangleList = new ArrayList<>();
         triangleList.add(new Triangle(renderingList.get(0), renderingList.get(1), renderingList.get(2)));
-        color = new Color(202,101,51, 255);
+        color = new Color(22,101,51, 255);
         sr.setColor(color);
     }
     @Override
@@ -66,7 +66,7 @@ public class SierpinskiTriangle implements Screen {
     public void renderTriangles(){
         sr.begin(ShapeRenderer.ShapeType.Line);
         for(int i = 0; i<renderingList.size(); i+=3){
-            Dim.drawTriangle(sr, renderingList.get(i), renderingList.get(i+1), renderingList.get(i+2));
+            Dim.drawTriangle(sr, renderingList.get(i), renderingList.get(i+1), renderingList.get(i+2), color);
         }
         sr.end();
     }
